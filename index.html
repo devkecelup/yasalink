@@ -121,10 +121,14 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* ── CLIPS ── */
-        .clip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; position: relative; z-index: 5; }
-        .clip-card { background: var(--white); border: var(--border); border-radius: var(--r2); box-shadow: var(--s2); padding: 18px; transition: transform .2s, box-shadow .2s; }
-        .clip-card:hover { transform: translate(-4px,-4px); box-shadow: var(--s3); }
+        /* ── CLIPS (Bento Style) ── */
+        .clip-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(220px, auto); gap: 24px; position: relative; z-index: 5; }
+        .clip-card { background: var(--white); border: var(--border); border-radius: var(--r2); box-shadow: var(--s2); padding: 18px; transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column; }
+        .clip-card:hover { transform: translate(-4px,-4px); box-shadow: var(--s3); z-index: 20; }
+        .clip-card iframe { width: 100%; height: 100%; border-radius: 10px; border: var(--border); flex: 1; pointer-events: auto; position: relative; z-index: 10; }
+        .bento-main { grid-column: span 2; grid-row: span 2; min-height: 420px; }
+        .bento-side { grid-column: span 1; grid-row: span 2; min-height: 420px; }
+        .bento-wide { grid-column: span 3; grid-row: span 1; min-height: 300px; }
 
         /* ── HERO ── */
         .hero { padding: 52px 24px 70px; max-width: 1200px; margin: 0 auto; position: relative; }
@@ -291,6 +295,10 @@
             /* Sections */
             .section { padding: 60px 18px; }
 
+            /* Bento on Mobile */
+            .clip-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+            .bento-main, .bento-side, .bento-wide { grid-column: span 1; grid-row: span 1; height: 350px; min-height: 350px; }
+
             /* Footer */
             .ft-grid { grid-template-columns: 1fr; gap: 26px; text-align: left; }
             .ft-logo, .ft-socials { justify-content: flex-start; }
@@ -317,8 +325,8 @@
     <a href="#home" title="Home"><i class="ph-fill ph-house"></i></a>
     <a href="#donators" title="Donators"><i class="ph-fill ph-crown"></i></a>
     <a href="#support" class="m-donate" title="Donate"><i class="ph-bold ph-hand-heart"></i></a>
-    <a href="#clips" title="Clips"><i class="ph-fill ph-youtube-logo"></i></a>
     <a href="#gallery" title="Fanart"><i class="ph-fill ph-image"></i></a>
+    <a href="#clips" title="Clips"><i class="ph-fill ph-youtube-logo"></i></a>
 </div>
 
 <!-- ART LIGHTBOX -->
@@ -399,9 +407,9 @@
     </div>
     <div class="nav-links">
         <a href="#donators">Top Donators</a>
-        <a href="#clips">Clips</a>
-        <a href="#gallery">Fanart</a>
         <a href="#support">Donate</a>
+        <a href="#gallery">Fanart</a>
+        <a href="#clips">Clips</a>
     </div>
     <a href="#support" class="btn btn-r" style="padding:9px 22px;font-size:1rem;">Donate!</a>
 </nav>
@@ -437,17 +445,37 @@
     <div class="don-grid reveal" id="donGrid"></div>
 </section>
 
-<!-- CLIPS -->
-<section class="section" id="clips">
+<!-- CARA DONASI -->
+<section class="section" id="support">
+    <!-- Mascot 4 – Grunge, kiri bawah -->
+    <img src="https://i.postimg.cc/Vvh71gtp/Red-and-White-Grunge-Gaming-Youtube-Thumbnail-(6).webp" alt="" class="mascot m4">
     <div class="sec-hdr reveal">
-        <h2 class="sec-title hf">CLIPS YOUTUBE &#x1F3AC;</h2>
+        <h2 class="sec-title hf">CARA DONASI &#x1F4B8;</h2>
     </div>
-    <div class="clip-grid reveal">
-        <div class="clip-card">
-            <iframe width="100%" height="280" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Clip 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px; border: var(--border);"></iframe>
+    <div class="plat-grid reveal">
+        <div class="plat-card plat-saweria">
+            <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
+                <img src="https://i.postimg.cc/9FTjQgmv/saweria.png" alt="Saweria" style="width:100%;height:100%;object-fit:contain;padding:12px;border-radius:50%">
+            </div>
+            <h3 class="plat-name hf">Saweria</h3>
+            <p class="plat-desc">Donasi langsung via QRIS, GoPay, OVO, atau Transfer Bank. Instan masuk ke stream!</p>
+            <a href="https://saweria.co" target="_blank" class="btn btn-y">Buka Saweria</a>
         </div>
-        <div class="clip-card">
-            <iframe width="100%" height="280" src="https://www.youtube.com/embed/jNQXAC9IVRw" title="Clip 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px; border: var(--border);"></iframe>
+        <div class="plat-card plat-trakteer">
+            <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
+                <img src="https://edge-cdn.trakteer.id/images/mix/trakteer-icon-thumbnail.png?v=14-05-2025" alt="Trakteer" style="width:100%;height:100%;object-fit:contain;padding:12px;border-radius:50%">
+            </div>
+            <h3 class="plat-name hf">Trakteer</h3>
+            <p class="plat-desc">Dukung kreator favorit dengan traktir kopi virtual. Mudah, cepat, langsung terkirim!</p>
+            <a href="https://trakteer.id" target="_blank" class="btn btn-r">Buka Trakteer</a>
+        </div>
+        <div class="plat-card plat-tako">
+            <div class="plat-logo" style="background:#EEF4FF; border:4px solid var(--dark); padding: 0;">
+                <img src="https://tako.id/images/resend-verification.png" alt="Tako" style="width:100%;height:100%;object-fit:contain;padding:6px;border-radius:50%">
+            </div>
+            <h3 class="plat-name hf">Tako</h3>
+            <p class="plat-desc">Platform dukungan VTuber &amp; kreator Indonesia. UI lucu dan super friendly!</p>
+            <a href="https://tako.id" target="_blank" class="btn btn-b">Buka Tako</a>
         </div>
     </div>
 </section>
@@ -480,37 +508,20 @@
     </div>
 </section>
 
-<!-- CARA DONASI -->
-<section class="section" id="support">
-    <!-- Mascot 4 – Grunge, kiri bawah -->
-    <img src="https://i.postimg.cc/Vvh71gtp/Red-and-White-Grunge-Gaming-Youtube-Thumbnail-(6).webp" alt="" class="mascot m4">
+<!-- CLIPS -->
+<section class="section" id="clips">
     <div class="sec-hdr reveal">
-        <h2 class="sec-title hf">CARA DONASI &#x1F4B8;</h2>
+        <h2 class="sec-title hf">CLIPS & HIGHLIGHTS &#x1F3AC;</h2>
     </div>
-    <div class="plat-grid reveal">
-        <div class="plat-card plat-saweria">
-            <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
-                <img src="https://i.postimg.cc/9FTjQgmv/saweria.png" alt="Saweria" style="width:100%;height:100%;object-fit:contain;padding:12px;border-radius:50%">
-            </div>
-            <h3 class="plat-name hf">Saweria</h3>
-            <p class="plat-desc">Donasi langsung via QRIS, GoPay, OVO, atau Transfer Bank. Instan masuk ke stream!</p>
-            <a href="https://saweria.co" target="_blank" class="btn btn-y">Buka Saweria</a>
+    <div class="clip-grid reveal">
+        <div class="clip-card bento-main">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Clip YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
-        <div class="plat-card plat-trakteer">
-            <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
-                <img src="https://edge-cdn.trakteer.id/images/mix/trakteer-icon-thumbnail.png?v=14-05-2025" alt="Trakteer" style="width:100%;height:100%;object-fit:contain;padding:12px;border-radius:50%">
-            </div>
-            <h3 class="plat-name hf">Trakteer</h3>
-            <p class="plat-desc">Dukung kreator favorit dengan traktir kopi virtual. Mudah, cepat, langsung terkirim!</p>
-            <a href="https://trakteer.id" target="_blank" class="btn btn-r">Buka Trakteer</a>
+        <div class="clip-card bento-side">
+            <iframe src="https://www.tiktok.com/embed/v2/7172810967527656730" title="Clip TikTok" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
-        <div class="plat-card plat-tako">
-            <div class="plat-logo" style="background:#EEF4FF; border:4px solid var(--dark); padding: 0;">
-                <img src="https://tako.id/images/resend-verification.png" alt="Tako" style="width:100%;height:100%;object-fit:contain;padding:6px;border-radius:50%">
-            </div>
-            <h3 class="plat-name hf">Tako</h3>
-            <p class="plat-desc">Platform dukungan VTuber &amp; kreator Indonesia. UI lucu dan super friendly!</p>
-            <a href="https://tako.id" target="_blank" class="btn btn-b">Buka Tako</a>
+        <div class="clip-card bento-wide">
+            <iframe src="https://www.youtube.com/embed/jNQXAC9IVRw" title="Clip YouTube 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
 </section>
