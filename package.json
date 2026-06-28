@@ -5,7 +5,6 @@
   "description": "YasaLink - Neo Brutalism Donation Support Hub",
   "scripts": {
     "dev": "vercel dev",
-    "build": "echo 'Static site, no build needed'",
     "start": "vercel dev"
   },
   "dependencies": {
