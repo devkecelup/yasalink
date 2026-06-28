@@ -117,6 +117,15 @@
         /* Mascot 4 – Grunge – Cara Donasi kiri (MEDIUM) */
         .m4 { width: 160px; bottom: -20px; left: -15px; transform: rotate(-5deg); animation: fl4 5.5s ease-in-out infinite alternate; }
 
+        /* ── ANIMATIONS ── */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ── CLIPS ── */
+        .clip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; position: relative; z-index: 5; }
+        .clip-card { background: var(--white); border: var(--border); border-radius: var(--r2); box-shadow: var(--s2); padding: 18px; transition: transform .2s, box-shadow .2s; }
+        .clip-card:hover { transform: translate(-4px,-4px); box-shadow: var(--s3); }
+
         /* ── HERO ── */
         .hero { padding: 52px 24px 70px; max-width: 1200px; margin: 0 auto; position: relative; }
         .hero-box {
@@ -308,7 +317,7 @@
     <a href="#home" title="Home"><i class="ph-fill ph-house"></i></a>
     <a href="#donators" title="Donators"><i class="ph-fill ph-crown"></i></a>
     <a href="#support" class="m-donate" title="Donate"><i class="ph-bold ph-hand-heart"></i></a>
-    <a href="#home" title="Events" onclick="document.querySelector('.ev-box').scrollIntoView({behavior:'smooth'})"><i class="ph-fill ph-calendar-star"></i></a>
+    <a href="#clips" title="Clips"><i class="ph-fill ph-youtube-logo"></i></a>
     <a href="#gallery" title="Fanart"><i class="ph-fill ph-image"></i></a>
 </div>
 
@@ -390,6 +399,7 @@
     </div>
     <div class="nav-links">
         <a href="#donators">Top Donators</a>
+        <a href="#clips">Clips</a>
         <a href="#gallery">Fanart</a>
         <a href="#support">Donate</a>
     </div>
@@ -398,7 +408,7 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
-    <div class="hero-box">
+    <div class="hero-box reveal">
         <div class="hero-l">
             <h1 class="hf">Support <br><span>Perjalananku!</span></h1>
             <p>Terima kasih udah mampir! Setiap dukungan kamu sangat berarti buat bikin karya yang lebih keren lagi. Love you all!</p>
@@ -421,21 +431,36 @@
 <section class="section" id="donators">
     <!-- Mascot 2 – Gun Chibi, kiri atas -->
     <img src="https://i.postimg.cc/vHHMmZVk/Tak-berjudul79-20260227163715.webp" alt="" class="mascot m2">
-    <div class="sec-hdr">
+    <div class="sec-hdr reveal">
         <h2 class="sec-title hf">TOP DONATORS &#x1F3C6;</h2>
     </div>
-    <div class="don-grid" id="donGrid"></div>
+    <div class="don-grid reveal" id="donGrid"></div>
+</section>
+
+<!-- CLIPS -->
+<section class="section" id="clips">
+    <div class="sec-hdr reveal">
+        <h2 class="sec-title hf">CLIPS YOUTUBE &#x1F3AC;</h2>
+    </div>
+    <div class="clip-grid reveal">
+        <div class="clip-card">
+            <iframe width="100%" height="280" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Clip 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px; border: var(--border);"></iframe>
+        </div>
+        <div class="clip-card">
+            <iframe width="100%" height="280" src="https://www.youtube.com/embed/jNQXAC9IVRw" title="Clip 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px; border: var(--border);"></iframe>
+        </div>
+    </div>
 </section>
 
 <!-- FANART GALLERY -->
 <section class="section" id="gallery">
     <!-- Mascot 3 – Chibi 3, kanan atas -->
     <img src="https://i.postimg.cc/7PKdmM53/Desain-tanpa-judul-(10).webp" alt="" class="mascot m3">
-    <div class="sec-hdr">
+    <div class="sec-hdr reveal">
         <h2 class="sec-title hf">FANART VIEWERS &#x1F3A8;</h2>
         <p style="font-size:1.1rem;margin-top:10px;font-weight:500">Makasih banget buat yang udah gambar! Share di Discord ya!</p>
     </div>
-    <div class="gal-grid">
+    <div class="gal-grid reveal">
         <div class="gal-item" onclick="openArt('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=900','@ArtByNaru','https://instagram.com')">
             <img src="https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=400&fit=crop" class="gal-img" alt="Fanart">
             <div class="gal-credit"><i class="ph-bold ph-instagram-logo"></i> @ArtByNaru</div>
@@ -459,13 +484,13 @@
 <section class="section" id="support">
     <!-- Mascot 4 – Grunge, kiri bawah -->
     <img src="https://i.postimg.cc/Vvh71gtp/Red-and-White-Grunge-Gaming-Youtube-Thumbnail-(6).webp" alt="" class="mascot m4">
-    <div class="sec-hdr">
+    <div class="sec-hdr reveal">
         <h2 class="sec-title hf">CARA DONASI &#x1F4B8;</h2>
     </div>
-    <div class="plat-grid">
+    <div class="plat-grid reveal">
         <div class="plat-card plat-saweria">
             <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
-                <img src="https://i.postimg.cc/9FTjQgmv/saweria.png" alt="Saweria" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+                <img src="https://i.postimg.cc/9FTjQgmv/saweria.png" alt="Saweria" style="width:100%;height:100%;object-fit:contain;padding:12px;border-radius:50%">
             </div>
             <h3 class="plat-name hf">Saweria</h3>
             <p class="plat-desc">Donasi langsung via QRIS, GoPay, OVO, atau Transfer Bank. Instan masuk ke stream!</p>
@@ -720,7 +745,18 @@ window.addEventListener('scroll', () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', init);
+// ── SCROLL REVEAL ANIMATION ──
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('active');
+        else e.target.classList.remove('active');
+    });
+}, { threshold: 0.1 });
+
+document.addEventListener('DOMContentLoaded', () => { 
+    init();
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
 </script>
 </body>
 </html>
