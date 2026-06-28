@@ -109,7 +109,7 @@
         .m1 { width: 220px; bottom: -35px; right: -20px; animation: fl1 4s ease-in-out infinite alternate; }
 
         /* Mascot 2 – Gun Chibi – Top Donators kiri atas (MEDIUM) */
-        .m2 { width: 180px; top: -55px; left: -15px; transform: rotate(-12deg); animation: fl2 5s ease-in-out infinite alternate; }
+        .m2 { width: 180px; top: 15px; left: -15px; transform: rotate(-12deg); animation: fl2 5s ease-in-out infinite alternate; }
 
         /* Mascot 3 – Chibi 3 – Fanart kanan (MEDIUM) */
         .m3 { width: 170px; top: -50px; right: -10px; transform: rotate(8deg); animation: fl3 4.5s ease-in-out infinite alternate-reverse; }
@@ -262,8 +262,6 @@
             .nav-links, nav > .btn-r { display: none !important; }
 
             .m-dock { display: flex; }
-            /* Body padding so last sections not hidden behind dock */
-            body { padding-bottom: 110px; }
             /* Footer bottom padding extra for mobile dock */
             footer { padding-bottom: 110px; }
 
@@ -275,7 +273,7 @@
 
             /* Mascots on mobile – visible but smaller */
             .m1 { width: 130px; right: 0; bottom: -20px; }
-            .m2 { width: 120px; top: -35px; left: 0; }
+            .m2 { width: 120px; top: 10px; left: 0; }
             .m3 { width: 110px; top: -30px; right: 0; }
             .m4 { width: 110px; bottom: -15px; left: 0; }
 
@@ -463,24 +461,49 @@
     </div>
     <div class="plat-grid">
         <div class="plat-card plat-saweria">
-            <div class="plat-logo">
-                <img src="https://saweria.co/img/saweria-logo.png" onerror="this.src='https://ui-avatars.com/api/?name=S&background=FF6B6B&color=fff&size=90'" alt="Saweria">
+            <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <circle cx="50" cy="50" r="50" fill="#FF6B6B"/>
+                    <text x="50" y="67" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="52" font-weight="900" fill="white">S</text>
+                </svg>
             </div>
             <h3 class="plat-name hf">Saweria</h3>
             <p class="plat-desc">Donasi langsung via QRIS, GoPay, OVO, atau Transfer Bank. Instan masuk ke stream!</p>
             <a href="https://saweria.co" target="_blank" class="btn btn-r">Buka Saweria</a>
         </div>
         <div class="plat-card plat-trakteer">
-            <div class="plat-logo">
-                <img src="https://trakteer.id/images/mix/navbar-logo-lite.png" onerror="this.src='https://ui-avatars.com/api/?name=T&background=E84242&color=fff&size=90'" alt="Trakteer">
+            <div class="plat-logo" style="background:#FFF0F0; border:4px solid var(--dark); padding: 0;">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <circle cx="50" cy="50" r="50" fill="#E84242"/>
+                    <rect x="36" y="28" width="28" height="5" rx="2.5" fill="white"/>
+                    <rect x="43" y="33" width="14" height="24" rx="3" fill="white"/>
+                    <path d="M32 62 Q50 75 68 62" stroke="white" stroke-width="5" fill="none" stroke-linecap="round"/>
+                </svg>
             </div>
             <h3 class="plat-name hf">Trakteer</h3>
             <p class="plat-desc">Dukung kreator favorit dengan traktir kopi virtual. Mudah, cepat, langsung terkirim!</p>
             <a href="https://trakteer.id" target="_blank" class="btn btn-y">Buka Trakteer</a>
         </div>
         <div class="plat-card plat-tako">
-            <div class="plat-logo">
-                <img src="https://tako.id/favicon.ico" onerror="this.src='https://ui-avatars.com/api/?name=Tako&background=5478BF&color=fff&size=90'" alt="Tako">
+            <div class="plat-logo" style="background:#EEF4FF; border:4px solid var(--dark); padding: 0;">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <circle cx="50" cy="50" r="50" fill="#5478BF"/>
+                    <!-- Body -->
+                    <ellipse cx="50" cy="46" rx="24" ry="22" fill="white"/>
+                    <!-- Eyes -->
+                    <circle cx="42" cy="40" r="5" fill="#5478BF"/>
+                    <circle cx="58" cy="40" r="5" fill="#5478BF"/>
+                    <circle cx="43" cy="39" r="2" fill="white"/>
+                    <circle cx="59" cy="39" r="2" fill="white"/>
+                    <!-- Mouth -->
+                    <path d="M44 52 Q50 56 56 52" stroke="#5478BF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- Tentacles -->
+                    <path d="M30 64 Q27 76 33 78 Q36 74 34 66" fill="white"/>
+                    <path d="M38 68 Q37 80 43 82 Q46 77 43 70" fill="white"/>
+                    <path d="M50 70 Q50 82 56 82 Q58 77 55 70" fill="white"/>
+                    <path d="M62 68 Q63 80 68 78 Q70 73 66 68" fill="white"/>
+                    <path d="M70 64 Q73 76 68 78 Q65 73 67 66" fill="white"/>
+                </svg>
             </div>
             <h3 class="plat-name hf">Tako</h3>
             <p class="plat-desc">Platform dukungan VTuber &amp; kreator Indonesia. UI lucu dan super friendly!</p>
