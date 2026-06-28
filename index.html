@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YasaLink – Support Hub</title>
+    <meta name="description" content="YasaLink – Support Hub resmi. Donasi, fanart viewers, dan jadwal event.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            --bg: #FAF8F5;
+            --blue: #5478BF;
+            --red: #8C2E40;
+            --yellow: #F2C94C;
+            --white: #FFFFFF;
+            --dark: #0F172A;
+            --gray: #94A3B8;
+            --border: 4px solid var(--dark);
+            --s1: 4px 4px 0 var(--dark);
+            --s2: 7px 7px 0 var(--dark);
+            --s3: 11px 11px 0 var(--dark);
+            --r1: 12px; --r2: 20px; --r3: 32px;
+            --fh: 'Fredoka', sans-serif;
+            --fb: 'Outfit', sans-serif;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+            font-family: var(--fb);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        .hf { font-family: var(--fh); }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 13px 28px; font-family: var(--fh); font-size: 1.1rem; font-weight: 600;
+            border: var(--border); border-radius: var(--r1); box-shadow: var(--s1);
+            cursor: pointer; transition: transform .1s, box-shadow .1s; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+        }
+        .btn:hover { transform: translate(-3px,-3px); box-shadow: var(--s2); }
+        .btn:active { transform: translate(0,0); box-shadow: none; }
+        .btn-y { background: var(--yellow); color: var(--dark); }
+        .btn-r { background: var(--red); color: var(--white); }
+        .btn-b { background: var(--blue); color: var(--white); }
+        .btn-w { background: var(--white); color: var(--dark); }
+        .btn-dk { background: var(--dark); color: var(--white); }
+
+        /* ── NAVBAR (Desktop – sticky) ── */
+        nav {
+            background: var(--white); border-bottom: var(--border);
+            padding: 14px 40px; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 1000;
+        }
+        .nav-logo {
+            font-family: var(--fh); font-size: 1.9rem; font-weight: 700; color: var(--red);
+            cursor: pointer; user-select: none; display: flex; align-items: center; gap: 10px;
+        }
+        .nav-logo i { color: var(--yellow); font-size: 2rem; }
+        .nav-links { display: flex; gap: 28px; align-items: center; }
+        .nav-links a { font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; transition: color .2s; }
+        .nav-links a:hover { color: var(--blue); }
+
+        /* ── MOBILE DOCK (Glassmorphism) ── */
+        .m-dock {
+            display: none;
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            /* Glass effect */
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 100px;
+            padding: 10px 24px; box-shadow: 0 8px 32px rgba(15,23,42,0.35), var(--s2);
+            z-index: 1001; gap: 24px; align-items: center;
+        }
+        .m-dock a {
+            color: rgba(255,255,255,0.8); font-size: 1.6rem; display: flex; align-items: center; justify-content: center;
+            width: 38px; height: 38px; border-radius: 50%; transition: color .2s, transform .15s, background .2s;
+        }
+        .m-dock a:hover, .m-dock a:active { color: var(--yellow); transform: translateY(-4px); }
+        .m-dock .m-donate {
+            background: var(--yellow); color: var(--dark) !important; border: 3px solid rgba(255,255,255,0.4);
+            border-radius: 50%; width: 52px; height: 52px; margin-top: -18px;
+            box-shadow: 0 4px 15px rgba(242,201,76,0.5); flex-shrink: 0; font-size: 1.4rem;
+        }
+        .m-dock .m-donate:hover { transform: translateY(-5px) scale(1.08); background: var(--yellow) !important; }
+
+        /* ── MASCOTS ── */
+        .mascot { position: absolute; pointer-events: none; filter: drop-shadow(4px 4px 0 rgba(15,23,42,.45)); z-index: 20; }
+        @keyframes fl1 { from{transform:translateY(0) rotate(-3deg)} to{transform:translateY(-16px) rotate(5deg)} }
+        @keyframes fl2 { from{transform:translateY(0) rotate(12deg)} to{transform:translateY(-14px) rotate(-2deg)} }
+        @keyframes fl3 { from{transform:translateY(0) rotate(-8deg)} to{transform:translateY(-12px) rotate(6deg)} }
+        @keyframes fl4 { from{transform:translateY(0) rotate(5deg)} to{transform:translateY(-14px) rotate(-4deg)} }
+
+        /* MASCOT SIZES & POSITIONS */
+        /* Mascot 1 – Main Chibi – Hero kanan bawah (BESAR) */
+        .m1 { width: 220px; bottom: -35px; right: -20px; animation: fl1 4s ease-in-out infinite alternate; }
+
+        /* Mascot 2 – Gun Chibi – Top Donators kiri atas (MEDIUM) */
+        .m2 { width: 180px; top: -55px; left: -15px; transform: rotate(-12deg); animation: fl2 5s ease-in-out infinite alternate; }
+
+        /* Mascot 3 – Chibi 3 – Fanart kanan (MEDIUM) */
+        .m3 { width: 170px; top: -50px; right: -10px; transform: rotate(8deg); animation: fl3 4.5s ease-in-out infinite alternate-reverse; }
+
+        /* Mascot 4 – Grunge – Cara Donasi kiri (MEDIUM) */
+        .m4 { width: 160px; bottom: -20px; left: -15px; transform: rotate(-5deg); animation: fl4 5.5s ease-in-out infinite alternate; }
+
+        /* ── HERO ── */
+        .hero { padding: 52px 24px 70px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .hero-box {
+            background: var(--blue); border: var(--border); border-radius: var(--r3);
+            box-shadow: var(--s3); display: grid; grid-template-columns: 1.4fr 1fr;
+            overflow: visible; min-height: 380px;
+        }
+        .hero-l {
+            padding: 60px 50px 70px; display: flex; flex-direction: column; justify-content: center;
+            color: var(--white); position: relative; z-index: 5;
+        }
+        .hero-l h1 { font-size: clamp(2.6rem, 4.5vw, 4.8rem); line-height: 1.05; text-shadow: 3px 3px 0 var(--dark); margin-bottom: 18px; }
+        .hero-l h1 span { color: var(--yellow); }
+        .hero-l p { font-size: 1.15rem; line-height: 1.65; font-weight: 500; margin-bottom: 36px; max-width: 420px; }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; position: relative; z-index: 10; }
+        .hero-r {
+            background: var(--white); border-left: var(--border); padding: 36px 32px;
+            display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 5;
+            border-radius: 0 var(--r3) var(--r3) 0; overflow: visible;
+        }
+
+        /* ── EVENT BOX ── */
+        .ev-box { background: var(--dark); border: var(--border); border-radius: var(--r2); padding: 22px; box-shadow: var(--s2); }
+        .ev-title { font-family: var(--fh); font-size: 1.35rem; color: var(--yellow); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .ev-list { display: flex; flex-direction: column; gap: 10px; }
+        .ev-item { background: var(--white); border: 2px solid var(--dark); border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; gap: 12px; }
+        .ev-date { background: var(--red); color: var(--white); padding: 6px 9px; border-radius: 7px; font-size: .85rem; font-weight: 700; text-align: center; line-height: 1.2; min-width: 48px; flex-shrink: 0; }
+        .ev-date span { display: block; font-size: 1.25rem; }
+        .ev-name { font-family: var(--fh); font-size: 1rem; }
+        .ev-time { font-size: .8rem; color: #555; }
+        .ev-empty { text-align: center; padding: 24px; color: rgba(255,255,255,.5); font-size: 1rem; }
+        .ev-empty i { display: block; font-size: 2.5rem; margin-bottom: 8px; }
+
+        /* ── SECTION BASE ── */
+        .section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .sec-hdr { text-align: center; margin-bottom: 52px; }
+        .sec-title { font-size: clamp(2.2rem, 4vw, 3.4rem); text-transform: uppercase; text-shadow: 3px 3px 0 var(--white), 5px 5px 0 var(--dark); display: inline-block; }
+
+        /* ── TOP DONATORS ── */
+        .don-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 36px; position: relative; z-index: 5; }
+        .don-card {
+            background: var(--white); border: var(--border); border-radius: var(--r2); box-shadow: var(--s2);
+            padding: 38px 20px 28px; text-align: center; position: relative; display: flex; flex-direction: column; align-items: center;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .don-card:hover { transform: translate(-5px,-5px); box-shadow: var(--s3); }
+        .don-rank {
+            position: absolute; top: -18px; left: -18px; width: 54px; height: 54px;
+            background: var(--red); color: var(--white); border: var(--border); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; font-family: var(--fh); font-size: 1.6rem; font-weight: 700;
+            box-shadow: 4px 4px 0 var(--dark); transform: rotate(-10deg);
+        }
+        .don-ava { width: 84px; height: 84px; border: var(--border); border-radius: 50%; margin-bottom: 16px; background: #D0D9F2; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; box-shadow: 4px 4px 0 var(--dark); }
+        .don-name { font-size: 1.7rem; margin-bottom: 8px; }
+        .don-amt { background: var(--yellow); border: var(--border); padding: 5px 18px; border-radius: 30px; font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; box-shadow: 3px 3px 0 var(--dark); }
+        .don-lbl { font-size: .9rem; color: var(--red); font-weight: 700; text-transform: uppercase; }
+
+        /* ── FANART GALLERY ── */
+        .gal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 26px; position: relative; z-index: 5; }
+        .gal-item { background: var(--white); border: var(--border); border-radius: var(--r1); padding: 14px; box-shadow: var(--s1); transform: rotate(-2deg); cursor: pointer; transition: transform .2s, box-shadow .2s; }
+        .gal-item:nth-child(even) { transform: rotate(2deg); }
+        .gal-item:hover { transform: scale(1.05) rotate(0deg); box-shadow: var(--s2); position: relative; z-index: 15; }
+        .gal-img { width: 100%; height: 190px; object-fit: cover; border: 3px solid var(--dark); border-radius: 8px; margin-bottom: 10px; }
+        .gal-credit { font-family: var(--fh); font-size: 1rem; text-align: center; display: flex; justify-content: center; align-items: center; gap: 5px; }
+
+        /* ── DONATE PLATFORMS ── */
+        .plat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; position: relative; z-index: 5; }
+        .plat-card {
+            background: var(--white); border: var(--border); border-radius: var(--r2); box-shadow: var(--s2);
+            padding: 44px 28px; text-align: center; display: flex; flex-direction: column; align-items: center;
+            transition: transform .15s, box-shadow .15s; position: relative;
+        }
+        .plat-card:hover { transform: translate(-5px,-5px); box-shadow: var(--s3); }
+        .plat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; border-radius: var(--r2) var(--r2) 0 0; }
+        .plat-saweria::before { background: #FF6B6B; }
+        .plat-trakteer::before { background: #E84242; }
+        .plat-tako::before { background: var(--blue); }
+        .plat-logo { width: 90px; height: 90px; border: var(--border); border-radius: 50%; margin-bottom: 22px; box-shadow: 4px 4px 0 var(--dark); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--white); }
+        .plat-logo img { width: 90px; height: 90px; object-fit: cover; border-radius: 50%; }
+        .plat-name { font-size: 1.9rem; margin-bottom: 12px; }
+        .plat-desc { font-size: 1rem; color: #475569; margin-bottom: 26px; line-height: 1.5; flex: 1; }
+
+        /* ── FOOTER (normal flow) ── */
+        footer {
+            background: var(--dark); color: var(--white);
+            padding: 56px 40px 36px; border-top: var(--border);
+        }
+        .ft-wrap { max-width: 1200px; margin: 0 auto; }
+        .ft-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .ft-logo { font-family: var(--fh); font-size: 2rem; color: var(--yellow); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .ft-desc { color: var(--gray); line-height: 1.6; max-width: 300px; }
+        .ft-col-title { font-family: var(--fh); font-size: 1.15rem; color: var(--white); margin-bottom: 18px; }
+        .ft-links { display: flex; flex-direction: column; gap: 11px; }
+        .ft-links a { color: var(--gray); transition: color .2s; }
+        .ft-links a:hover { color: var(--yellow); }
+        .ft-socials { display: flex; gap: 12px; }
+        .ft-socials a { width: 42px; height: 42px; background: rgba(255,255,255,.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--white); transition: background .2s, transform .2s; }
+        .ft-socials a:hover { background: var(--yellow); color: var(--dark); transform: translateY(-3px); }
+        .ft-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 28px; text-align: center; color: #64748B; font-size: .9rem; }
+
+        /* ── ADMIN SECRET HINT ── */
+        .admin-hint {
+            position: fixed; bottom: 10px; right: 14px; font-size: .7rem; color: rgba(0,0,0,.18); z-index: 5; user-select: none;
+        }
+
+        /* ── MODALS ── */
+        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.94); z-index: 99999; align-items: center; justify-content: center; padding: 20px; }
+        .modal-bg.on { display: flex; }
+        .modal-box { background: var(--white); border: var(--border); border-radius: var(--r2); padding: 22px; max-width: 760px; width: 100%; box-shadow: 10px 10px 0 var(--yellow); position: relative; display: flex; flex-direction: column; align-items: center; }
+        .modal-close { position: absolute; top: -16px; right: -16px; background: var(--red); color: var(--white); width: 40px; height: 40px; border: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; cursor: pointer; box-shadow: 4px 4px 0 var(--dark); }
+        .modal-img { width: 100%; max-height: 55vh; object-fit: contain; border: 3px solid var(--dark); border-radius: 8px; margin-bottom: 18px; }
+        .modal-name { font-family: var(--fh); font-size: 1.4rem; margin-bottom: 12px; }
+
+        /* ── ADMIN PANEL (Tabbed) ── */
+        .admin-bg { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.92); z-index: 999999; align-items: center; justify-content: center; padding: 20px; }
+        .admin-bg.on { display: flex; }
+        .admin-box { background: var(--white); border: var(--border); border-radius: var(--r2); box-shadow: 12px 12px 0 var(--yellow); width: 90%; max-width: 700px; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; }
+        .adm-hdr { background: var(--red); color: var(--white); padding: 18px 26px; border-bottom: var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .adm-tabs { display: flex; border-bottom: var(--border); background: var(--bg); flex-shrink: 0; }
+        .adm-tab { flex: 1; padding: 14px; font-family: var(--fh); font-size: 1.05rem; text-align: center; cursor: pointer; border-right: 3px solid var(--dark); font-weight: 600; transition: background .15s; }
+        .adm-tab:last-child { border-right: none; }
+        .adm-tab.active { background: var(--yellow); }
+        .adm-tab:hover:not(.active) { background: #EEF2FF; }
+        .adm-body { padding: 26px; overflow-y: auto; flex: 1; }
+        .adm-close { background: var(--yellow); color: var(--dark); border: var(--border); border-radius: 8px; width: 38px; height: 38px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; }
+        .fg { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+        .fg label { font-weight: 700; }
+        .fg input { padding: 12px; border: var(--border); border-radius: 10px; font-family: var(--fb); font-size: 1rem; background: #EEF2FF; }
+        .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .adm-list { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+        .adm-item { background: #F8F9FF; border: 3px solid var(--dark); border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 3px 3px 0 var(--dark); gap: 10px; }
+        .adm-item span { font-weight: 600; flex: 1; }
+        .adm-btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+        /* ── TOAST ── */
+        .toast { position: fixed; top: 26px; right: 26px; background: var(--dark); color: var(--yellow); padding: 16px 28px; border: var(--border); border-radius: 12px; transform: translateY(-120px); opacity: 0; transition: all .3s; z-index: 9999999; box-shadow: 5px 5px 0 var(--yellow); font-weight: 700; font-size: 1.05rem; }
+        .toast.on { transform: translateY(0); opacity: 1; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            /* Navbar NOT sticky on mobile */
+            nav { position: relative; top: auto; padding: 13px 20px; }
+            .nav-links, nav > .btn-r { display: none !important; }
+
+            .m-dock { display: flex; }
+            /* Body padding so last sections not hidden behind dock */
+            body { padding-bottom: 110px; }
+            /* Footer bottom padding extra for mobile dock */
+            footer { padding-bottom: 110px; }
+
+            /* Hero stacks */
+            .hero { padding: 24px 16px 50px; }
+            .hero-box { grid-template-columns: 1fr; border-radius: 20px; min-height: unset; }
+            .hero-l { padding: 36px 24px 44px; border-radius: 20px 20px 0 0; }
+            .hero-r { border-left: none; border-top: var(--border); padding: 26px 20px 36px; border-radius: 0 0 20px 20px; overflow: visible; }
+
+            /* Mascots on mobile – visible but smaller */
+            .m1 { width: 130px; right: 0; bottom: -20px; }
+            .m2 { width: 120px; top: -35px; left: 0; }
+            .m3 { width: 110px; top: -30px; right: 0; }
+            .m4 { width: 110px; bottom: -15px; left: 0; }
+
+            /* Sections */
+            .section { padding: 60px 18px; }
+
+            /* Footer */
+            .ft-grid { grid-template-columns: 1fr; gap: 26px; text-align: center; }
+            .ft-logo, .ft-socials { justify-content: center; }
+            .ft-desc { margin: 0 auto; }
+
+            /* Admin */
+            .fg-row { grid-template-columns: 1fr; }
+            .adm-tab { font-size: .9rem; padding: 12px 8px; }
+        }
+        @media (max-width: 500px) {
+            .hero-l h1 { font-size: 2.4rem; }
+            .hero-btns .btn { font-size: .95rem; padding: 11px 18px; }
+            .sec-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+<div class="admin-hint">© YasaLink</div>
+
+<!-- MOBILE DOCK (Glass) -->
+<div class="m-dock" id="mDock">
+    <a href="#home" title="Home"><i class="ph-fill ph-house"></i></a>
+    <a href="#donators" title="Donators"><i class="ph-fill ph-crown"></i></a>
+    <a href="#support" class="m-donate" title="Donate"><i class="ph-bold ph-hand-heart"></i></a>
+    <a href="#gallery" title="Fanart"><i class="ph-fill ph-image"></i></a>
+</div>
+
+<!-- ART LIGHTBOX -->
+<div class="modal-bg" id="artModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeArt()">&#x2715;</button>
+        <img src="" class="modal-img" id="artImg" alt="Fanart">
+        <div class="modal-name" id="artName"></div>
+        <a href="#" target="_blank" class="btn btn-b" id="artLink"><i class="ph-bold ph-instagram-logo"></i> Lihat di Instagram</a>
+    </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-bg" id="adminBg">
+    <div class="admin-box">
+
+        <!-- LOGIN VIEW -->
+        <div id="loginView">
+            <div class="adm-hdr">
+                <span class="hf" style="font-size:1.4rem">&#x1F510; Admin Login</span>
+                <button class="adm-close" onclick="closeAdmin()">&#x2715;</button>
+            </div>
+            <div class="adm-body">
+                <p style="margin-bottom:16px;color:#475569;font-size:1rem;">Masukkan password admin untuk mengelola donatur dan event.</p>
+                <div class="fg"><label>Password</label><input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+                <button class="btn btn-b" style="width:100%" onclick="doLogin()">Masuk ke Admin Panel</button>
+            </div>
+        </div>
+
+        <!-- ADMIN VIEW (Tabbed) -->
+        <div id="adminView" style="display:none;display:flex;flex-direction:column;height:100%">
+            <div class="adm-hdr">
+                <span class="hf" style="font-size:1.4rem">&#x2699; Admin Panel</span>
+                <button class="adm-close" onclick="closeAdmin()">&#x2715;</button>
+            </div>
+            <div class="adm-tabs">
+                <div class="adm-tab active" onclick="switchTab('donTab','evTab',this)">&#x1F3C6; Donatur</div>
+                <div class="adm-tab" onclick="switchTab('evTab','donTab',this)">&#x1F4C5; Event</div>
+            </div>
+
+            <!-- Donatur Tab -->
+            <div class="adm-body" id="donTab">
+                <input type="hidden" id="editIdx" value="-1">
+                <div class="fg-row">
+                    <div class="fg"><label>Nama</label><input type="text" id="fName" placeholder="Nama donatur"></div>
+                    <div class="fg"><label>Jumlah</label><input type="text" id="fAmt" placeholder="Rp 1.000.000"></div>
+                </div>
+                <div class="fg-row">
+                    <div class="fg"><label>Icon (ph-star) / Inisial (A)</label><input type="text" id="fIcon" placeholder="ph-star atau A"></div>
+                    <div class="fg"><label>Label</label><input type="text" id="fLbl" value="Supporter"></div>
+                </div>
+                <button class="btn btn-y" style="width:100%;margin-bottom:8px" onclick="saveDon()">&#x1F4BE; Simpan Donatur</button>
+                <button class="btn btn-w" style="width:100%;font-size:.9rem;padding:8px" onclick="resetDonForm()">Reset Form</button>
+                <div class="adm-list" id="admDonList"></div>
+            </div>
+
+            <!-- Event Tab -->
+            <div class="adm-body" id="evTab" style="display:none">
+                <input type="hidden" id="editEvIdx" value="-1">
+                <div class="fg-row">
+                    <div class="fg"><label>Tanggal (Misal: Agu 15)</label><input type="text" id="fEvDate" placeholder="Agu 15"></div>
+                    <div class="fg"><label>Waktu & Lokasi</label><input type="text" id="fEvTime" placeholder="19:00 WIB • Live YouTube"></div>
+                </div>
+                <div class="fg"><label>Nama Event</label><input type="text" id="fEvName" placeholder="Nama acara / stream"></div>
+                <button class="btn btn-b" style="width:100%;margin-bottom:8px" onclick="saveEv()">&#x1F4BE; Simpan Event</button>
+                <button class="btn btn-w" style="width:100%;font-size:.9rem;padding:8px" onclick="resetEvForm()">Reset Form</button>
+                <div class="adm-list" id="admEvList"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-logo" id="navLogo" onclick="triggerAdmin()">
+        <i class="ph-fill ph-coins"></i> YASALINK
+    </div>
+    <div class="nav-links">
+        <a href="#donators">Top Donators</a>
+        <a href="#gallery">Fanart</a>
+        <a href="#support">Donate</a>
+    </div>
+    <a href="#support" class="btn btn-r" style="padding:9px 22px;font-size:1rem;">Donate!</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-box">
+        <div class="hero-l">
+            <h1 class="hf">Support <br><span>Perjalananku!</span></h1>
+            <p>Terima kasih udah mampir! Setiap dukungan kamu sangat berarti buat bikin karya yang lebih keren lagi. Love you all!</p>
+            <div class="hero-btns">
+                <a href="#support" class="btn btn-y"><i class="ph-bold ph-hand-heart"></i> DONASI</a>
+                <a href="https://discord.gg" target="_blank" class="btn btn-w"><i class="ph-bold ph-discord-logo"></i> Discord</a>
+            </div>
+        </div>
+        <div class="hero-r">
+            <!-- Mascot 1 – ngintip di pojok kanan bawah hero -->
+            <img src="https://i.postimg.cc/6QqH7FTK/Tak-berjudul44-20260126182130.png" alt="" class="mascot m1">
+            <div class="ev-box" id="evBox">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOP DONATORS -->
+<section class="section" id="donators">
+    <!-- Mascot 2 – Gun Chibi, kiri atas -->
+    <img src="https://i.postimg.cc/vHHMmZVk/Tak-berjudul79-20260227163715.webp" alt="" class="mascot m2">
+    <div class="sec-hdr">
+        <h2 class="sec-title hf">TOP DONATORS &#x1F3C6;</h2>
+    </div>
+    <div class="don-grid" id="donGrid"></div>
+</section>
+
+<!-- FANART GALLERY -->
+<section class="section" id="gallery">
+    <!-- Mascot 3 – Chibi 3, kanan atas -->
+    <img src="https://i.postimg.cc/7PKdmM53/Desain-tanpa-judul-(10).webp" alt="" class="mascot m3">
+    <div class="sec-hdr">
+        <h2 class="sec-title hf">FANART VIEWERS &#x1F3A8;</h2>
+        <p style="font-size:1.1rem;margin-top:10px;font-weight:500">Makasih banget buat yang udah gambar! Share di Discord ya!</p>
+    </div>
+    <div class="gal-grid">
+        <div class="gal-item" onclick="openArt('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=900','@ArtByNaru','https://instagram.com')">
+            <img src="https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=400&fit=crop" class="gal-img" alt="Fanart">
+            <div class="gal-credit"><i class="ph-bold ph-instagram-logo"></i> @ArtByNaru</div>
+        </div>
+        <div class="gal-item" onclick="openArt('https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=900','@KazeDraws','https://instagram.com')">
+            <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=400&fit=crop" class="gal-img" alt="Fanart">
+            <div class="gal-credit"><i class="ph-bold ph-instagram-logo"></i> @KazeDraws</div>
+        </div>
+        <div class="gal-item" onclick="openArt('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=900','@ChibiLover','https://instagram.com')">
+            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=400&fit=crop" class="gal-img" alt="Fanart">
+            <div class="gal-credit"><i class="ph-bold ph-instagram-logo"></i> @ChibiLover</div>
+        </div>
+        <div class="gal-item" onclick="openArt('https://images.unsplash.com/photo-1518998053401-87895e6834d8?q=80&w=900','@YasaFans','https://instagram.com')">
+            <img src="https://images.unsplash.com/photo-1518998053401-87895e6834d8?q=80&w=400&fit=crop" class="gal-img" alt="Fanart">
+            <div class="gal-credit"><i class="ph-bold ph-instagram-logo"></i> @YasaFans</div>
+        </div>
+    </div>
+</section>
+
+<!-- CARA DONASI -->
+<section class="section" id="support">
+    <!-- Mascot 4 – Grunge, kiri bawah -->
+    <img src="https://i.postimg.cc/Vvh71gtp/Red-and-White-Grunge-Gaming-Youtube-Thumbnail-(6).webp" alt="" class="mascot m4">
+    <div class="sec-hdr">
+        <h2 class="sec-title hf">CARA DONASI &#x1F4B8;</h2>
+    </div>
+    <div class="plat-grid">
+        <div class="plat-card plat-saweria">
+            <div class="plat-logo">
+                <img src="https://saweria.co/img/saweria-logo.png" onerror="this.src='https://ui-avatars.com/api/?name=S&background=FF6B6B&color=fff&size=90'" alt="Saweria">
+            </div>
+            <h3 class="plat-name hf">Saweria</h3>
+            <p class="plat-desc">Donasi langsung via QRIS, GoPay, OVO, atau Transfer Bank. Instan masuk ke stream!</p>
+            <a href="https://saweria.co" target="_blank" class="btn btn-r">Buka Saweria</a>
+        </div>
+        <div class="plat-card plat-trakteer">
+            <div class="plat-logo">
+                <img src="https://trakteer.id/images/mix/navbar-logo-lite.png" onerror="this.src='https://ui-avatars.com/api/?name=T&background=E84242&color=fff&size=90'" alt="Trakteer">
+            </div>
+            <h3 class="plat-name hf">Trakteer</h3>
+            <p class="plat-desc">Dukung kreator favorit dengan traktir kopi virtual. Mudah, cepat, langsung terkirim!</p>
+            <a href="https://trakteer.id" target="_blank" class="btn btn-y">Buka Trakteer</a>
+        </div>
+        <div class="plat-card plat-tako">
+            <div class="plat-logo">
+                <img src="https://tako.id/favicon.ico" onerror="this.src='https://ui-avatars.com/api/?name=Tako&background=5478BF&color=fff&size=90'" alt="Tako">
+            </div>
+            <h3 class="plat-name hf">Tako</h3>
+            <p class="plat-desc">Platform dukungan VTuber &amp; kreator Indonesia. UI lucu dan super friendly!</p>
+            <a href="https://tako.id" target="_blank" class="btn btn-b">Buka Tako</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="ft-wrap">
+        <div class="ft-grid">
+            <div>
+                <div class="ft-logo"><i class="ph-fill ph-coins"></i> YASALINK</div>
+                <p class="ft-desc">Support Hub resmi! Tempat ngumpulnya donatur setia, jadwal event, dan galeri fanart komunitas.</p>
+            </div>
+            <div>
+                <div class="ft-col-title">Jelajahi</div>
+                <div class="ft-links">
+                    <a href="#home">Beranda</a>
+                    <a href="#donators">Top Donatur</a>
+                    <a href="#gallery">Galeri Fanart</a>
+                    <a href="#support">Cara Donasi</a>
+                </div>
+            </div>
+            <div>
+                <div class="ft-col-title">Sosial Media</div>
+                <div class="ft-socials">
+                    <a href="#" aria-label="Instagram"><i class="ph-bold ph-instagram-logo"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="ph-bold ph-youtube-logo"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="ph-bold ph-x-logo"></i></a>
+                    <a href="#" aria-label="Discord"><i class="ph-bold ph-discord-logo"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="ft-bottom">&copy; 2026 YasaLink.</div>
+    </div>
+</footer>
+
+<script>
+const API = '/api/donators';
+let pwd = '', donors = [], events = [], apiOk = true, clicks = 0, ctimer;
+
+const DEF_DONORS = [
+    {name:'Akira',amount:'Rp 5.000.000',initial:'ph-crown',color:'--yellow',label:'Top Supporter',photo:''},
+    {name:'Kuro',amount:'Rp 3.500.000',initial:'ph-star',color:'--pink',label:'Legend',photo:''},
+    {name:'Noru',amount:'Rp 2.800.000',initial:'ph-heart',color:'--orange',label:'Hero',photo:''}
+];
+const DEF_EVENTS = [
+    {date:'Agu 15',name:'Mabar Valorant Subs',time:'19:00 WIB • Live YouTube'},
+    {date:'Agu 18',name:'QnA & Just Chatting',time:'20:00 WIB • Live YouTube'}
+];
+
+// ── LOAD DATA ──
+async function loadData() {
+    try {
+        const r = await fetch(API);
+        if (!r.ok) throw 0;
+        const j = await r.json();
+        apiOk = true;
+        return { donors: j.data || DEF_DONORS, events: j.events || DEF_EVENTS };
+    } catch {
+        apiOk = false;
+        const sd = localStorage.getItem('yl_dn');
+        const se = localStorage.getItem('yl_ev');
+        return {
+            donors: sd ? JSON.parse(sd) : DEF_DONORS,
+            events: se ? JSON.parse(se) : DEF_EVENTS
+        };
+    }
+}
+
+async function init() {
+    const d = await loadData();
+    donors = [...d.donors];
+    events = [...d.events];
+    renderDonors();
+    renderEvents();
+}
+
+// ── RENDER DONORS ──
+function renderDonors() {
+    const g = document.getElementById('donGrid'); g.innerHTML = '';
+    donors.forEach((x, i) => {
+        const c = document.createElement('div'); c.className = 'don-card';
+        const ico = x.initial.startsWith('ph-') ? `<i class="ph-fill ${esc(x.initial)}"></i>` : esc(x.initial || x.name[0]);
+        c.innerHTML = `<div class="don-rank">#${i+1}</div><div class="don-ava">${ico}</div><div class="don-name hf">${esc(x.name)}</div><div class="don-amt">${esc(x.amount)}</div><div class="don-lbl">${esc(x.label||'Supporter')}</div>`;
+        g.appendChild(c);
+    });
+}
+
+// ── RENDER EVENTS ──
+function renderEvents() {
+    const box = document.getElementById('evBox');
+    if (!box) return;
+
+    let html = `<div class="ev-title"><i class="ph-bold ph-calendar-star"></i> Jadwal Event</div>`;
+    if (!events || events.length === 0) {
+        html += `<div class="ev-empty"><i class="ph-bold ph-calendar-x"></i>Belum ada event.<br>Cek lagi nanti ya!</div>`;
+    } else {
+        html += `<div class="ev-list">`;
+        events.forEach(e => {
+            const parts = e.date.split(' ');
+            const mon = parts[0] || '';
+            const day = parts[1] || '';
+            html += `<div class="ev-item"><div class="ev-date">${esc(mon)}<span>${esc(day)}</span></div><div><div class="ev-name hf">${esc(e.name)}</div><div class="ev-time">${esc(e.time)}</div></div></div>`;
+        });
+        html += `</div>`;
+    }
+    box.innerHTML = html;
+}
+
+// ── SECRET ADMIN (klik logo 5x) ──
+function triggerAdmin() {
+    clicks++; clearTimeout(ctimer);
+    if (clicks >= 5) { clicks = 0; openAdmin(); }
+    else ctimer = setTimeout(() => clicks = 0, 1000);
+}
+function openAdmin() {
+    document.getElementById('adminBg').classList.add('on');
+    if (pwd) showAdmPanel();
+    else { document.getElementById('loginView').style.display = 'block'; document.getElementById('adminView').style.display = 'none'; }
+}
+function closeAdmin() { document.getElementById('adminBg').classList.remove('on'); }
+function showAdmPanel() {
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('adminView').style.display = 'flex';
+    renderAdmDonors();
+    renderAdmEvents();
+}
+function switchTab(showId, hideId, el) {
+    document.getElementById(showId).style.display = 'block';
+    document.getElementById(hideId).style.display = 'none';
+    document.querySelectorAll('.adm-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// ── LOGIN ──
+async function doLogin() {
+    const p = document.getElementById('adminPass').value;
+    if (apiOk) {
+        try {
+            const r = await fetch(API, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',password:p})});
+            const j = await r.json();
+            if (j.success) { pwd = p; donors = j.data || donors; events = j.events || events; showAdmPanel(); renderDonors(); renderEvents(); }
+            else alert('Password salah!');
+        } catch { if (p==='yasalink2024') { pwd=p; showAdmPanel(); } else alert('Error!'); }
+    } else { if (p==='yasalink2024') { pwd=p; showAdmPanel(); } else alert('Password salah!'); }
+}
+
+// ── DONOR ADMIN ──
+function renderAdmDonors() {
+    const l = document.getElementById('admDonList'); l.innerHTML = '';
+    donors.forEach((d, i) => {
+        l.innerHTML += `<div class="adm-item"><span><b>${esc(d.name)}</b> &ndash; ${esc(d.amount)}</span><div class="adm-btns"><button class="btn btn-b" style="padding:5px 11px;font-size:.8rem" onclick="editDon(${i})"><i class="ph-bold ph-pencil"></i></button><button class="btn btn-r" style="padding:5px 11px;font-size:.8rem" onclick="delDon(${i})"><i class="ph-bold ph-trash"></i></button></div></div>`;
+    });
+}
+async function saveDon() {
+    const n = document.getElementById('fName').value, a = document.getElementById('fAmt').value;
+    if (!n||!a) return alert('Isi nama dan jumlah!');
+    const entry = {name:n,amount:a,initial:document.getElementById('fIcon').value||n[0],color:'--yellow',label:document.getElementById('fLbl').value,photo:''};
+    const idx = parseInt(document.getElementById('editIdx').value);
+    if (idx >= 0) donors[idx] = entry; else donors.push(entry);
+    await pushDonors();
+}
+async function delDon(i) { if (!confirm('Hapus donatur ini?')) return; donors.splice(i,1); await pushDonors(); }
+function editDon(i) {
+    const d=donors[i];
+    document.getElementById('fName').value=d.name; document.getElementById('fAmt').value=d.amount;
+    document.getElementById('fIcon').value=d.initial||''; document.getElementById('fLbl').value=d.label;
+    document.getElementById('editIdx').value=i;
+}
+function resetDonForm() {
+    ['fName','fAmt','fIcon'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('fLbl').value='Supporter'; document.getElementById('editIdx').value='-1';
+}
+async function pushDonors() {
+    if (apiOk) await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'save',password:pwd,donators:donors})});
+    else localStorage.setItem('yl_dn', JSON.stringify(donors));
+    resetDonForm(); renderAdmDonors(); renderDonors(); showToast('Donatur tersimpan! ✅');
+}
+
+// ── EVENT ADMIN ──
+function renderAdmEvents() {
+    const l = document.getElementById('admEvList'); l.innerHTML = '';
+    if (events.length === 0) { l.innerHTML = '<p style="color:#888;text-align:center;margin-top:14px">Belum ada event.</p>'; return; }
+    events.forEach((e, i) => {
+        l.innerHTML += `<div class="adm-item"><span><b>${esc(e.date)}</b> &ndash; ${esc(e.name)}</span><div class="adm-btns"><button class="btn btn-b" style="padding:5px 11px;font-size:.8rem" onclick="editEv(${i})"><i class="ph-bold ph-pencil"></i></button><button class="btn btn-r" style="padding:5px 11px;font-size:.8rem" onclick="delEv(${i})"><i class="ph-bold ph-trash"></i></button></div></div>`;
+    });
+}
+async function saveEv() {
+    const date=document.getElementById('fEvDate').value, name=document.getElementById('fEvName').value, time=document.getElementById('fEvTime').value;
+    if (!date||!name) return alert('Isi tanggal dan nama event!');
+    const entry = {date, name, time};
+    const idx = parseInt(document.getElementById('editEvIdx').value);
+    if (idx >= 0) events[idx] = entry; else events.push(entry);
+    await pushEvents();
+}
+async function delEv(i) { if (!confirm('Hapus event ini?')) return; events.splice(i,1); await pushEvents(); }
+function editEv(i) {
+    const e=events[i];
+    document.getElementById('fEvDate').value=e.date; document.getElementById('fEvName').value=e.name;
+    document.getElementById('fEvTime').value=e.time; document.getElementById('editEvIdx').value=i;
+}
+function resetEvForm() {
+    ['fEvDate','fEvName','fEvTime'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('editEvIdx').value='-1';
+}
+async function pushEvents() {
+    if (apiOk) await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'save_events',password:pwd,events})});
+    else localStorage.setItem('yl_ev', JSON.stringify(events));
+    resetEvForm(); renderAdmEvents(); renderEvents(); showToast('Event tersimpan! ✅');
+}
+
+// ── ART MODAL ──
+function openArt(src,name,link) {
+    document.getElementById('artImg').src=src; document.getElementById('artName').textContent='Oleh '+name;
+    document.getElementById('artLink').href=link; document.getElementById('artModal').classList.add('on');
+}
+function closeArt() { document.getElementById('artModal').classList.remove('on'); document.getElementById('artImg').src=''; }
+document.getElementById('artModal').addEventListener('click', function(e){ if(e.target===this)closeArt(); });
+
+function showToast(m) { const t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),3000); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
